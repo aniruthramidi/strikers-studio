@@ -1,0 +1,61 @@
+import React from 'react';
+import { motion } from 'framer-motion';
+
+export default function Studio() {
+  return (
+    <section id="studio" aria-label="Studio Manifesto" className="relative bg-ink text-paper py-28 px-6 md:px-12 grid-lines-dark overflow-hidden">
+      {/* Section Header */}
+      <div className="flex justify-between items-start pb-8 border-b border-paper/15 text-xs font-mono tracking-widest text-paper-soft uppercase">
+        <span>ABOUT / STUDIO</span>
+        <span>02 / 07</span>
+      </div>
+
+      <div className="max-w-7xl mx-auto py-16 md:py-24">
+        {/* Title */}
+        <div className="flex flex-col md:flex-row md:items-baseline justify-between mb-16">
+          <h2 className="section-wordmark font-display font-bold text-paper">
+            Studio
+          </h2>
+          <span className="font-mono text-2xl md:text-5xl font-extralight text-paper-soft mt-2 md:mt-0">
+            ©-2026
+          </span>
+        </div>
+
+        <div className="w-full h-[1px] bg-paper/20 mb-16" />
+
+        {/* Quotation & Statement */}
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 items-start">
+          {/* Quote Mark Icon Left */}
+          <div className="lg:col-span-2 text-paper-soft">
+            <svg viewBox="0 0 500 384" className="w-16 h-16 md:w-24 md:h-24 fill-current">
+              <path d="M2.94434 384L2.10192 275.233C1.85966 243.954 7.47265 211.385 18.9409 177.526C30.7618 143.31 46.8633 111.015 67.2452 80.6424C87.9799 49.9115 111.24 23.9598 137.025 2.7874L227.048 60.2093C206.322 92.0066 188.983 125.2 175.032 159.788C161.434 194.018 154.972 231.748 155.647 272.977L156.498 382.811L2.94434 384ZM273.262 381.906L272.42 273.139C272.178 241.86 277.791 209.291 289.259 175.433C301.08 141.216 317.181 108.921 337.563 78.5487C358.298 47.8178 381.558 21.8662 407.343 0.693746L497.366 58.1157C476.64 89.9129 459.301 123.106 445.35 157.694C431.752 191.925 425.29 229.654 425.965 270.884L426.816 380.717L273.262 381.906Z" />
+            </svg>
+          </div>
+
+          {/* Core Manifesto Text */}
+          <div className="lg:col-span-10 flex flex-col gap-10">
+            <motion.p 
+              initial={{ opacity: 0, y: 30 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.7 }}
+              className="text-2xl sm:text-3xl md:text-5xl font-medium leading-tight text-paper tracking-tight"
+            >
+              In modern web design, the real challenge isn't adding more—it's stripping away the superfluous until only the essence remains.
+            </motion.p>
+
+            <motion.p 
+              initial={{ opacity: 0, y: 30 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.7, delay: 0.2 }}
+              className="text-xl sm:text-2xl md:text-4xl font-normal leading-snug text-paper-soft tracking-tight"
+            >
+              —eliminating friction between your user and your brand. We pair aesthetic precision with raw speed, turning complex ideas into clean, fast, and memorable digital experiences.
+            </motion.p>
+          </div>
+        </div>
+      </div>
+    </section>
+  );
+}
