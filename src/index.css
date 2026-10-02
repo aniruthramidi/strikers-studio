@@ -1,0 +1,166 @@
+@import "tailwindcss";
+
+/* ==========================================================================
+   STRIKERS® STUDIO — DESIGN SYSTEM & EDITORIAL BRUTALISM
+   ========================================================================== */
+
+:root {
+  --paper: #ebebeb;
+  --paper-soft: #a3a3a3;
+  --paper-muted: #d5d5d5;
+  --ink: #0a0a0a;
+  --ink-soft: #555555;
+  --ink-muted: #222222;
+  --border-ink: rgba(10, 10, 10, 0.15);
+  --border-paper: rgba(235, 235, 235, 0.2);
+  
+  --font-sans: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  --font-display: 'Syne', 'Inter', sans-serif;
+  --font-mono: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+}
+
+*, *::before, *::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html {
+  font-family: var(--font-sans);
+  background-color: var(--paper);
+  color: var(--ink);
+  scroll-behavior: smooth;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  overflow-x: hidden;
+}
+
+body {
+  overflow-x: hidden;
+  background-color: var(--paper);
+  color: var(--ink);
+  min-height: 100vh;
+  selection-background-color: #000;
+  selection-color: #fff;
+}
+
+::selection {
+  background: var(--ink);
+  color: var(--paper);
+}
+
+/* --------------------------------------------------------------------------
+   CUSTOM UTILITIES & TYPOGRAPHY CLAMPS
+   -------------------------------------------------------------------------- */
+
+.font-display {
+  font-family: var(--font-display);
+}
+
+.font-sans {
+  font-family: var(--font-sans);
+}
+
+.font-mono {
+  font-family: var(--font-mono);
+}
+
+.bg-paper { background-color: var(--paper); }
+.bg-ink { background-color: var(--ink); }
+.text-paper { color: var(--paper); }
+.text-ink { color: var(--ink); }
+.text-ink-soft { color: var(--ink-soft); }
+.text-paper-soft { color: var(--paper-soft); }
+
+.border-ink-subtle { border-color: var(--border-ink); }
+.border-paper-subtle { border-color: var(--border-paper); }
+
+/* Giant typography matching whitee.dev */
+.hero-wordmark {
+  font-size: clamp(4rem, 17.5vw, 22rem);
+  font-weight: 800;
+  line-height: 0.88;
+  letter-spacing: -0.04em;
+  text-transform: uppercase;
+}
+
+.section-wordmark {
+  font-size: clamp(3rem, 14vw, 18rem);
+  font-weight: 800;
+  line-height: 0.88;
+  letter-spacing: -0.03em;
+  text-transform: uppercase;
+}
+
+.sub-wordmark {
+  font-size: clamp(2rem, 8vw, 10rem);
+  font-weight: 700;
+  line-height: 0.95;
+  letter-spacing: -0.02em;
+}
+
+/* Custom noise overlay */
+.bg-noise {
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)' opacity='0.03'/%3E%3C/svg%3E");
+}
+
+/* Custom scrollbars */
+::-webkit-scrollbar {
+  width: 6px;
+}
+::-webkit-scrollbar-track {
+  background: var(--paper);
+}
+::-webkit-scrollbar-thumb {
+  background: #aaa;
+  border-radius: 3px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: #666;
+}
+
+/* Micro grid lines */
+.grid-lines {
+  background-size: 80px 80px;
+  background-image: 
+    linear-gradient(to right, rgba(10, 10, 10, 0.04) 1px, transparent 1px),
+    linear-gradient(to bottom, rgba(10, 10, 10, 0.04) 1px, transparent 1px);
+}
+
+.grid-lines-dark {
+  background-size: 80px 80px;
+  background-image: 
+    linear-gradient(to right, rgba(255, 255, 255, 0.04) 1px, transparent 1px),
+    linear-gradient(to bottom, rgba(255, 255, 255, 0.04) 1px, transparent 1px);
+}
+
+/* Horizontal Infinite Marquee */
+@keyframes marquee {
+  0% { transform: translateX(0%); }
+  100% { transform: translateX(-50%); }
+}
+
+.animate-marquee {
+  display: flex;
+  width: max-content;
+  animation: marquee 25s linear infinite;
+}
+
+.animate-marquee:hover {
+  animation-play-state: paused;
+}
+
+/* Pulse dot */
+@keyframes pulse-slow {
+  0%, 100% { opacity: 1; transform: scale(1); }
+  50% { opacity: 0.4; transform: scale(0.85); }
+}
+
+.animate-pulse-dot {
+  animation: pulse-slow 2s infinite ease-in-out;
+}
+
+/* Line reveal transition */
+.transition-line {
+  transition: transform 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+}
