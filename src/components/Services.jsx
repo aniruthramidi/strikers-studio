@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
+import { services } from '../data/services';
 
 export default function Services() {
   const [activeImage, setActiveImage] = useState(null);
@@ -12,33 +13,6 @@ export default function Services() {
     window.addEventListener('mousemove', handleMouseMove);
     return () => window.removeEventListener('mousemove', handleMouseMove);
   }, []);
-
-  const services = [
-    {
-      num: '001',
-      title: 'PRODUCTION',
-      desc: '4K multi-cam studio recording, lighting, sound & flagship video editing',
-      image: '/project-1.jpg'
-    },
-    {
-      num: '002',
-      title: 'VIRAL CLIPS',
-      desc: 'Short-form video editing, hook pacing, dynamic captions & social scaling',
-      image: '/project-2.jpg'
-    },
-    {
-      num: '003',
-      title: 'PODCASTS',
-      desc: 'Broadcast video podcast production, multi-camera switching & audio mastering',
-      image: '/project-3.jpg'
-    },
-    {
-      num: '004',
-      title: 'CREATOR OS',
-      desc: 'Bespoke creator websites, digital product storefronts & subscriber communities',
-      image: '/project-4.jpg'
-    }
-  ];
 
   return (
     <section id="services" aria-label="Services" className="relative bg-paper text-ink py-24 px-6 md:px-12 grid-lines">
