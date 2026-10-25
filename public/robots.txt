@@ -1,0 +1,5 @@
+# robots.txt for STRIKERS Studio
+User-agent: *
+Allow: /
+
+Sitemap: https://strikers.studio/sitemap.xml
