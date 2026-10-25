@@ -1,6 +1,7 @@
 import React, { useEffect } from 'react';
 import Lenis from 'lenis';
 import Preloader from './components/Preloader';
+import SkipToContent from './components/SkipToContent';
 import Navbar from './components/Navbar';
 import Hero from './components/Hero';
 import Studio from './components/Studio';
@@ -35,6 +36,9 @@ export default function App() {
 
   return (
     <div className="relative bg-paper text-ink selection:bg-ink selection:text-paper font-sans">
+      {/* Accessibility Skip Link */}
+      <SkipToContent />
+
       {/* Interactive Preloader Screen */}
       <Preloader />
 
@@ -42,7 +46,7 @@ export default function App() {
       <Navbar />
 
       {/* Main Page Sections */}
-      <main className="relative z-10">
+      <main id="main-content" tabIndex={-1} className="relative z-10 outline-none">
         <Hero />
         <Studio />
         <Work />
