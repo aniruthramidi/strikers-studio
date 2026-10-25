@@ -1,5 +1,4 @@
 import React, { useState } from 'react';
-import { motion } from 'framer-motion';
 import { Copy, Check, ArrowUpRight } from 'lucide-react';
 
 export default function Contact() {
