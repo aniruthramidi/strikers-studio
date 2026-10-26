@@ -10,44 +10,58 @@ export default function Meaning() {
         <span>05 / 07</span>
       </div>
 
-      {/* Main Image Frame Container incorporating user's gradient-accent.jpg */}
-      <div className="relative my-auto w-full max-w-6xl mx-auto h-[65vh] rounded-2xl overflow-hidden border border-ink/20 shadow-xl group">
+      {/* Main Image Frame Container with Butter-Smooth Ambient Motion */}
+      <motion.div 
+        initial={{ opacity: 0, scale: 0.96 }}
+        whileInView={{ opacity: 1, scale: 1 }}
+        viewport={{ once: true }}
+        transition={{ duration: 0.9, ease: [0.16, 1, 0.3, 1] }}
+        style={{ willChange: 'transform' }}
+        className="relative my-auto w-full max-w-6xl mx-auto h-[65vh] rounded-2xl overflow-hidden border border-ink/20 shadow-2xl group gpu-accelerated select-none"
+      >
         <img
           src="/gradient-accent.jpg"
           alt="The Meaning Aesthetic Mesh"
-          className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-1000"
+          className="w-full h-full object-cover group-hover:scale-108 transition-transform duration-1000 ease-[cubic-bezier(0.16,1,0.3,1)] gpu-accelerated"
         />
-        <div className="absolute inset-0 bg-ink/40 mix-blend-multiply" />
+        <div className="absolute inset-0 bg-ink/45 mix-blend-multiply transition-opacity duration-700 group-hover:opacity-35" />
 
         {/* Overlay Giant Heading */}
         <div className="absolute inset-0 p-8 md:p-16 flex flex-col justify-between text-paper">
           <motion.h2 
-            initial={{ opacity: 0, y: 30 }}
+            initial={{ opacity: 0, y: 40 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
-            transition={{ duration: 0.8 }}
+            transition={{ duration: 0.85, ease: [0.16, 1, 0.3, 1] }}
+            style={{ willChange: 'transform, opacity' }}
             className="text-4xl sm:text-7xl md:text-9xl font-extrabold font-display tracking-tight"
           >
             THE MEANING
           </motion.h2>
 
-          {/* Floating Editorial Quotes */}
+          {/* Floating Editorial Quotes with Staggered Entrance */}
           <div className="grid grid-cols-1 md:grid-cols-3 gap-6 font-mono text-xs md:text-sm text-paper-soft border-t border-paper/20 pt-6">
-            <div>
-              <span className="text-paper font-bold block mb-1">01 / BRAND</span>
-              <p>not only a brand</p>
-            </div>
-            <div>
-              <span className="text-paper font-bold block mb-1">02 / PURPOSE</span>
-              <p>an idea with a reasoning</p>
-            </div>
-            <div>
-              <span className="text-paper font-bold block mb-1">03 / EXPERIENCE</span>
-              <p>something to discover</p>
-            </div>
+            {[
+              { num: '01 / BRAND', text: 'not only a brand' },
+              { num: '02 / PURPOSE', text: 'an idea with a reasoning' },
+              { num: '03 / EXPERIENCE', text: 'something to discover' }
+            ].map((col, i) => (
+              <motion.div
+                key={col.num}
+                initial={{ opacity: 0, y: 20 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                transition={{ duration: 0.6, delay: 0.2 + i * 0.1, ease: [0.16, 1, 0.3, 1] }}
+                whileHover={{ y: -4 }}
+                className="transition-colors hover:text-paper cursor-default"
+              >
+                <span className="text-paper font-bold block mb-1">{col.num}</span>
+                <p>{col.text}</p>
+              </motion.div>
+            ))}
           </div>
         </div>
-      </div>
+      </motion.div>
 
       {/* Bottom Bar */}
       <div className="pt-8 border-t border-ink/20 flex justify-between items-center text-xs font-mono text-ink-soft">
