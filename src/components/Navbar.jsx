@@ -1,10 +1,14 @@
 import React, { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { ArrowUpRight, X, Menu, Clock } from 'lucide-react';
+import { useMagnetic } from '../hooks/useMagnetic';
 
 export default function Navbar() {
   const [isOpen, setIsOpen] = useState(false);
   const [timeStr, setTimeStr] = useState('');
+
+  const logoMag = useMagnetic({ strength: 0.2 });
+  const menuMag = useMagnetic({ strength: 0.35 });
 
   useEffect(() => {
     const updateTime = () => {
@@ -28,9 +32,16 @@ export default function Navbar() {
 
   const handleLinkClick = (href) => {
     setIsOpen(false);
-    const element = document.querySelector(href);
-    if (element) {
-      element.scrollIntoView({ behavior: 'smooth' });
+    if (window.__lenis) {
+      window.__lenis.scrollTo(href === '#top' ? 0 : href, {
+        offset: 0,
+        duration: 1.2,
+      });
+    } else {
+      const element = document.querySelector(href);
+      if (element) {
+        element.scrollIntoView({ behavior: 'smooth' });
+      }
     }
   };
 
@@ -38,24 +49,31 @@ export default function Navbar() {
     <>
       {/* Floating Header */}
       <header className="fixed top-0 left-0 right-0 z-50 flex justify-between items-center px-6 py-5 md:px-12 md:py-7 pointer-events-none">
-        {/* Brand Wordmark Left */}
-        <a 
+        {/* Brand Wordmark Left with Butter-Smooth Magnetic Spring */}
+        <motion.a 
+          style={{ x: logoMag.x, y: logoMag.y }}
+          onMouseMove={logoMag.onMouseMove}
+          onMouseLeave={logoMag.onMouseLeave}
           href="#top" 
           onClick={(e) => { e.preventDefault(); handleLinkClick('#top'); }}
-          className="pointer-events-auto text-lg md:text-xl font-extrabold tracking-tighter text-ink mix-blend-difference hover:opacity-75 transition-opacity"
+          className="pointer-events-auto text-lg md:text-xl font-extrabold tracking-tighter text-ink mix-blend-difference hover:opacity-75 transition-opacity inline-block select-none"
         >
           STRIKERS®
-        </a>
+        </motion.a>
 
-        {/* Menu Trigger Button */}
-        <button
+        {/* Menu Trigger Button with Butter-Smooth Magnetic Spring */}
+        <motion.button
+          style={{ x: menuMag.x, y: menuMag.y }}
+          onMouseMove={menuMag.onMouseMove}
+          onMouseLeave={menuMag.onMouseLeave}
           type="button"
           onClick={() => setIsOpen(!isOpen)}
           aria-label={isOpen ? 'Close menu' : 'Open menu'}
-          className="pointer-events-auto p-3 rounded-full bg-ink text-paper mix-blend-difference hover:scale-105 active:scale-95 transition-all duration-300 shadow-md flex items-center justify-center cursor-pointer"
+          whileTap={{ scale: 0.92 }}
+          className="pointer-events-auto p-3 rounded-full bg-ink text-paper mix-blend-difference hover:scale-105 active:scale-95 transition-transform duration-200 shadow-md flex items-center justify-center cursor-pointer select-none"
         >
           {isOpen ? <X size={20} /> : <Menu size={20} />}
-        </button>
+        </motion.button>
       </header>
 
       {/* Navigation Modal Drawer */}
