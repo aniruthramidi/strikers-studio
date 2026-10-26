@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { motion, AnimatePresence, useMotionValue, useSpring } from 'framer-motion';
+import { ArrowUpRight } from 'lucide-react';
 import { services } from '../data/services';
 
 export default function Services() {
@@ -44,26 +45,40 @@ export default function Services() {
 
       {/* Services List */}
       <div className="border-t border-ink/30 my-8">
-        {services.map((item) => (
-          <div
+        {services.map((item, idx) => (
+          <motion.div
             key={item.num}
+            initial={{ opacity: 0, y: 30 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.6, delay: idx * 0.08, ease: [0.16, 1, 0.3, 1] }}
+            whileHover={{ x: 8 }}
+            style={{ willChange: 'transform' }}
             onMouseEnter={() => setActiveImage(item.image)}
             onMouseLeave={() => setActiveImage(null)}
-            className="group relative border-b border-ink/20 py-8 md:py-12 px-2 md:px-4 flex flex-col md:flex-row md:items-center justify-between transition-colors duration-300 hover:bg-ink/5 cursor-pointer"
+            className="group relative border-b border-ink/20 py-8 md:py-12 px-2 md:px-4 flex flex-col md:flex-row md:items-center justify-between transition-colors duration-400 hover:bg-ink/5 cursor-pointer gpu-accelerated select-none"
           >
             <div className="flex items-baseline gap-6 md:gap-12">
-              <span className="font-mono text-sm md:text-xl font-semibold text-ink-soft group-hover:text-ink transition-colors">
+              <span className="font-mono text-sm md:text-xl font-semibold text-ink-soft group-hover:text-ink transition-colors duration-300">
                 {item.num}
               </span>
-              <h3 className="text-3xl md:text-6xl font-extrabold font-display tracking-tight text-ink group-hover:translate-x-2 transition-transform duration-300">
+              <h3 className="text-3xl md:text-6xl font-extrabold font-display tracking-tight text-ink group-hover:translate-x-1 transition-transform duration-300">
                 {item.title}
               </h3>
             </div>
 
-            <p className="text-sm md:text-xl font-medium text-ink-soft max-w-md mt-4 md:mt-0 group-hover:text-ink transition-colors">
-              {item.desc}
-            </p>
-          </div>
+            <div className="flex items-center gap-6 mt-4 md:mt-0">
+              <p className="text-sm md:text-xl font-medium text-ink-soft max-w-md group-hover:text-ink transition-colors duration-300">
+                {item.desc}
+              </p>
+              <div className="hidden md:flex p-2 rounded-full border border-ink/0 group-hover:border-ink/20 transition-all duration-300 shrink-0">
+                <ArrowUpRight 
+                  size={22} 
+                  className="opacity-0 group-hover:opacity-100 group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-all duration-300 ease-out" 
+                />
+              </div>
+            </div>
+          </motion.div>
         ))}
       </div>
 
