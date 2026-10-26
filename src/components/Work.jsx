@@ -30,9 +30,11 @@ export default function Work() {
             initial={{ opacity: 0, y: 40 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
-            transition={{ duration: 0.6, delay: index * 0.1 }}
+            transition={{ duration: 0.7, delay: index * 0.1, ease: [0.16, 1, 0.3, 1] }}
+            whileHover={{ y: -6 }}
+            style={{ willChange: 'transform' }}
             onClick={() => setSelectedProject(project)}
-            className="group relative cursor-pointer border border-ink/20 bg-ink text-paper rounded-xl overflow-hidden shadow-lg hover:border-ink/60 transition-all duration-500"
+            className="group relative cursor-pointer border border-ink/20 bg-ink text-paper rounded-xl overflow-hidden shadow-lg hover:border-ink/60 transition-colors duration-500 gpu-accelerated select-none"
           >
             {/* Card Content Grid */}
             <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 p-6 md:p-10 items-center">
@@ -41,12 +43,12 @@ export default function Work() {
                 <img
                   src={project.image}
                   alt={project.title}
-                  className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700 ease-out"
+                  className="w-full h-full object-cover group-hover:scale-108 transition-transform duration-700 ease-[cubic-bezier(0.16,1,0.3,1)] gpu-accelerated"
                 />
-                <div className="absolute inset-0 bg-gradient-to-t from-ink/80 via-transparent to-transparent opacity-60" />
+                <div className="absolute inset-0 bg-gradient-to-t from-ink/80 via-transparent to-transparent opacity-60 group-hover:opacity-40 transition-opacity duration-500" />
                 
                 {/* Floating Code Badge */}
-                <div className="absolute top-4 left-4 font-mono text-xl md:text-3xl font-extrabold text-paper bg-ink/80 px-3 py-1 rounded border border-paper/20">
+                <div className="absolute top-4 left-4 font-mono text-xl md:text-3xl font-extrabold text-paper bg-ink/80 px-3 py-1 rounded border border-paper/20 group-hover:scale-105 transition-transform duration-300">
                   {project.code}
                 </div>
               </div>
@@ -57,11 +59,11 @@ export default function Work() {
                   <div className="flex justify-between items-center text-xs font-mono text-paper-soft mb-2">
                     <span>{project.year}</span>
                     <span className="flex items-center gap-1 group-hover:text-paper transition-colors">
-                      VIEW CASE STUDY <ArrowUpRight size={14} className="group-hover:translate-x-1 group-hover:-translate-y-1 transition-transform" />
+                      VIEW CASE STUDY <ArrowUpRight size={14} className="group-hover:translate-x-1 group-hover:-translate-y-1 transition-transform duration-300 ease-out" />
                     </span>
                   </div>
 
-                  <h3 className="text-3xl md:text-5xl font-extrabold font-display tracking-tight text-paper group-hover:text-paper-soft transition-colors">
+                  <h3 className="text-3xl md:text-5xl font-extrabold font-display tracking-tight text-paper group-hover:text-paper-soft transition-colors duration-300">
                     {project.title}
                   </h3>
 
@@ -72,7 +74,7 @@ export default function Work() {
 
                 <div className="mt-8 pt-6 border-t border-paper/15 flex justify-between items-center text-xs font-mono text-paper-soft">
                   <span>{project.client}</span>
-                  <span className="px-3 py-1 rounded-full border border-paper/30 text-paper group-hover:bg-paper group-hover:text-ink transition-colors">
+                  <span className="px-3 py-1 rounded-full border border-paper/30 text-paper group-hover:bg-paper group-hover:text-ink transition-colors duration-300">
                     DETAILS ↘
                   </span>
                 </div>
@@ -86,10 +88,18 @@ export default function Work() {
       <div className="flex justify-center pt-8">
         <a
           href="#contact"
-          className="group inline-flex items-center gap-3 px-8 py-4 rounded-full bg-ink text-paper font-mono text-sm md:text-base font-bold hover:bg-ink/80 transition-all hover:scale-105"
+          onClick={(e) => {
+            e.preventDefault();
+            if (window.__lenis) {
+              window.__lenis.scrollTo('#contact', { duration: 1.2 });
+            } else {
+              document.querySelector('#contact')?.scrollIntoView({ behavior: 'smooth' });
+            }
+          }}
+          className="group inline-flex items-center gap-3 px-8 py-4 rounded-full bg-ink text-paper font-mono text-sm md:text-base font-bold hover:bg-ink/80 hover:scale-105 active:scale-95 transition-all duration-300 cursor-pointer shadow-md"
         >
           <span>WORK WITH OUR PRODUCTION TEAM</span>
-          <ArrowUpRight className="group-hover:rotate-45 transition-transform duration-300" size={18} />
+          <ArrowUpRight className="group-hover:rotate-45 transition-transform duration-300 ease-out" size={18} />
         </a>
       </div>
 
