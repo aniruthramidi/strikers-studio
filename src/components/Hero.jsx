@@ -1,6 +1,43 @@
 import React from 'react';
-import { motion } from 'framer-motion';
+import { motion, useMotionValue, useTransform, useSpring } from 'framer-motion';
 import { ArrowDown } from 'lucide-react';
+
+function TiltCard({ children, className = '' }) {
+  const x = useMotionValue(0);
+  const y = useMotionValue(0);
+
+  const rotateX = useSpring(useTransform(y, [-0.5, 0.5], [10, -10]), { damping: 20, stiffness: 220 });
+  const rotateY = useSpring(useTransform(x, [-0.5, 0.5], [-10, 10]), { damping: 20, stiffness: 220 });
+
+  const handleMouseMove = (e) => {
+    const rect = e.currentTarget.getBoundingClientRect();
+    const mouseX = e.clientX - rect.left;
+    const mouseY = e.clientY - rect.top;
+    x.set(mouseX / rect.width - 0.5);
+    y.set(mouseY / rect.height - 0.5);
+  };
+
+  const handleMouseLeave = () => {
+    x.set(0);
+    y.set(0);
+  };
+
+  return (
+    <motion.div
+      onMouseMove={handleMouseMove}
+      onMouseLeave={handleMouseLeave}
+      style={{
+        rotateX,
+        rotateY,
+        transformStyle: 'preserve-3d',
+        willChange: 'transform',
+      }}
+      className={`perspective-1000 ${className}`}
+    >
+      {children}
+    </motion.div>
+  );
+}
 
 export default function Hero() {
   const letters = ['S', 'T', 'R', 'I', 'K', 'E', 'R', 'S'];
@@ -82,27 +119,29 @@ export default function Hero() {
             </p>
           </motion.div>
 
-          {/* User's Uploaded Gradient Image Editorial Accent Card */}
+          {/* User's Uploaded Gradient Image Editorial Accent Card with Butter-Smooth 3D Tilt */}
           <motion.div 
             initial={{ opacity: 0, scale: 0.9 }}
             animate={{ opacity: 1, scale: 1 }}
-            transition={{ delay: 0.9, duration: 0.6 }}
+            transition={{ delay: 0.9, duration: 0.6, ease: [0.16, 1, 0.3, 1] }}
             className="md:col-span-5 flex flex-col md:items-end"
           >
-            <div className="relative group overflow-hidden rounded-lg border border-ink/15 p-2 bg-paper/60 backdrop-blur-sm w-full max-w-xs shadow-sm">
-              <div className="relative h-28 w-full overflow-hidden rounded">
-                <img 
-                  src="/gradient-accent.jpg" 
-                  alt="STRIKERS Studio Gradient Mesh" 
-                  className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700"
-                />
-                <div className="absolute inset-0 bg-ink/10 mix-blend-overlay" />
+            <TiltCard className="w-full max-w-xs cursor-pointer">
+              <div className="relative group overflow-hidden rounded-lg border border-ink/15 p-2 bg-paper/60 backdrop-blur-sm shadow-sm hover:shadow-lg transition-shadow duration-500">
+                <div className="relative h-28 w-full overflow-hidden rounded">
+                  <img 
+                    src="/gradient-accent.jpg" 
+                    alt="STRIKERS Studio Gradient Mesh" 
+                    className="w-full h-full object-cover group-hover:scale-108 transition-transform duration-700 ease-out"
+                  />
+                  <div className="absolute inset-0 bg-ink/10 mix-blend-overlay group-hover:opacity-0 transition-opacity duration-500" />
+                </div>
+                <div className="flex justify-between items-center mt-2 px-1 text-[11px] font-mono text-ink-soft">
+                  <span>CREATOR GROWTH ENGINE</span>
+                  <span className="font-bold text-ink">©2026</span>
+                </div>
               </div>
-              <div className="flex justify-between items-center mt-2 px-1 text-[11px] font-mono text-ink-soft">
-                <span>CREATOR GROWTH ENGINE</span>
-                <span className="font-bold text-ink">©2026</span>
-              </div>
-            </div>
+            </TiltCard>
           </motion.div>
         </div>
       </div>
