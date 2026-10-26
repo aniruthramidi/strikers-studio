@@ -1,18 +1,26 @@
 import React, { useState, useEffect } from 'react';
-import { motion, AnimatePresence } from 'framer-motion';
+import { motion, AnimatePresence, useMotionValue, useSpring } from 'framer-motion';
 import { services } from '../data/services';
 
 export default function Services() {
   const [activeImage, setActiveImage] = useState(null);
-  const [mousePos, setMousePos] = useState({ x: 0, y: 0 });
+
+  // High-framerate zero-rerender spring physics for cursor follower
+  const mouseX = useMotionValue(0);
+  const mouseY = useMotionValue(0);
+
+  const springConfig = { damping: 22, stiffness: 220, mass: 0.15 };
+  const smoothX = useSpring(mouseX, springConfig);
+  const smoothY = useSpring(mouseY, springConfig);
 
   useEffect(() => {
     const handleMouseMove = (e) => {
-      setMousePos({ x: e.clientX, y: e.clientY });
+      mouseX.set(e.clientX + 24);
+      mouseY.set(e.clientY - 95);
     };
     window.addEventListener('mousemove', handleMouseMove);
     return () => window.removeEventListener('mousemove', handleMouseMove);
-  }, []);
+  }, [mouseX, mouseY]);
 
   return (
     <section id="services" aria-label="Services" className="relative bg-paper text-ink py-24 px-6 md:px-12 grid-lines">
@@ -63,14 +71,15 @@ export default function Services() {
       <AnimatePresence>
         {activeImage && (
           <motion.div
-            initial={{ opacity: 0, scale: 0.8 }}
+            initial={{ opacity: 0, scale: 0.85 }}
             animate={{ opacity: 1, scale: 1 }}
-            exit={{ opacity: 0, scale: 0.8 }}
-            transition={{ type: 'spring', damping: 25, stiffness: 250 }}
-            className="fixed pointer-events-none z-30 hidden md:block w-72 h-48 rounded-lg overflow-hidden border border-paper shadow-2xl"
+            exit={{ opacity: 0, scale: 0.85 }}
+            transition={{ type: 'spring', damping: 25, stiffness: 280 }}
+            className="fixed top-0 left-0 pointer-events-none z-30 hidden md:block w-72 h-48 rounded-lg overflow-hidden border border-paper shadow-2xl gpu-accelerated"
             style={{
-              left: `${mousePos.x + 20}px`,
-              top: `${mousePos.y - 100}px`
+              x: smoothX,
+              y: smoothY,
+              willChange: 'transform',
             }}
           >
             <img
