@@ -83,49 +83,82 @@ export default function Navbar() {
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
-            className="fixed inset-0 z-40 bg-ink/60 backdrop-blur-md flex justify-end"
+            transition={{ duration: 0.35, ease: [0.16, 1, 0.3, 1] }}
+            className="fixed inset-0 z-40 bg-ink/65 backdrop-blur-md flex justify-end"
             onClick={() => setIsOpen(false)}
           >
             <motion.div
               initial={{ x: '100%' }}
               animate={{ x: 0 }}
               exit={{ x: '100%' }}
-              transition={{ duration: 0.6, ease: [0.16, 1, 0.3, 1] }}
-              className="w-full max-w-2xl h-full bg-ink text-paper flex flex-col justify-between p-8 md:p-14 overflow-y-auto"
+              transition={{ duration: 0.65, ease: [0.16, 1, 0.3, 1] }}
+              style={{ willChange: 'transform' }}
+              className="w-full max-w-2xl h-full bg-ink text-paper flex flex-col justify-between p-8 md:p-14 overflow-y-auto gpu-accelerated shadow-2xl"
               onClick={(e) => e.stopPropagation()}
             >
               {/* Drawer Top Header */}
-              <div className="flex justify-between items-center pb-8 border-b border-paper/15 text-xs font-mono tracking-widest text-paper-soft">
+              <motion.div 
+                initial={{ opacity: 0, y: -10 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ delay: 0.15, duration: 0.4, ease: [0.16, 1, 0.3, 1] }}
+                className="flex justify-between items-center pb-8 border-b border-paper/15 text-xs font-mono tracking-widest text-paper-soft"
+              >
                 <span>STRIKERS STUDIO®</span>
                 <span className="flex items-center gap-2">
                   <span className="w-2 h-2 rounded-full bg-emerald-400 animate-pulse-dot" />
                   AVAILABLE FOR Q4 2026
                 </span>
-              </div>
+              </motion.div>
 
               {/* Navigation Links */}
-              <nav className="my-10 flex flex-col gap-4">
-                {navLinks.map((item, index) => (
+              <motion.nav 
+                initial="hidden"
+                animate="visible"
+                variants={{
+                  hidden: { opacity: 0 },
+                  visible: {
+                    opacity: 1,
+                    transition: {
+                      staggerChildren: 0.05,
+                      delayChildren: 0.15,
+                    },
+                  },
+                }}
+                className="my-10 flex flex-col gap-4"
+              >
+                {navLinks.map((item) => (
                   <motion.a
                     key={item.label}
                     href={item.href}
                     onClick={(e) => { e.preventDefault(); handleLinkClick(item.href); }}
-                    initial={{ opacity: 0, x: 30 }}
-                    animate={{ opacity: 1, x: 0 }}
-                    transition={{ delay: 0.1 + index * 0.06, duration: 0.4 }}
-                    className="group flex items-baseline gap-6 py-2 border-b border-paper/10 text-3xl md:text-5xl font-extrabold tracking-tight hover:text-paper-soft transition-colors cursor-pointer"
+                    variants={{
+                      hidden: { opacity: 0, x: 35 },
+                      visible: { 
+                        opacity: 1, 
+                        x: 0,
+                        transition: { duration: 0.5, ease: [0.16, 1, 0.3, 1] }
+                      },
+                    }}
+                    whileHover={{ x: 8 }}
+                    transition={{ type: 'spring', stiffness: 350, damping: 25 }}
+                    className="group flex items-baseline gap-6 py-2 border-b border-paper/10 text-3xl md:text-5xl font-extrabold tracking-tight hover:text-paper-soft transition-colors cursor-pointer select-none"
                   >
                     <span className="font-mono text-xs md:text-sm font-normal text-paper-soft group-hover:text-paper transition-colors">
                       {item.num}
                     </span>
                     <span>{item.label}</span>
-                    <ArrowUpRight className="ml-auto opacity-0 group-hover:opacity-100 group-hover:translate-x-1 group-hover:-translate-y-1 transition-all duration-300" size={28} />
+                    <ArrowUpRight className="ml-auto opacity-0 group-hover:opacity-100 group-hover:translate-x-1 group-hover:-translate-y-1 transition-all duration-300 ease-out" size={28} />
                   </motion.a>
                 ))}
-              </nav>
+              </motion.nav>
 
               {/* Drawer Footer Info */}
-              <div className="pt-8 border-t border-paper/15 flex flex-col md:flex-row justify-between items-start md:items-end gap-6 text-xs text-paper-soft">
+              <motion.div 
+                initial={{ opacity: 0, y: 15 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ delay: 0.35, duration: 0.5, ease: [0.16, 1, 0.3, 1] }}
+                className="pt-8 border-t border-paper/15 flex flex-col md:flex-row justify-between items-start md:items-end gap-6 text-xs text-paper-soft"
+              >
                 <div className="flex flex-col gap-1">
                   <div className="flex items-center gap-2 font-mono text-paper font-semibold">
                     <Clock size={14} />
@@ -140,7 +173,7 @@ export default function Navbar() {
                     hello@strikers.studio
                   </a>
                 </div>
-              </div>
+              </motion.div>
             </motion.div>
           </motion.div>
         )}
