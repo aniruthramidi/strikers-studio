@@ -16,24 +16,53 @@ export default function Hero() {
       {/* Massive Typographic Hero Wordmark */}
       <div className="my-auto py-8">
         <div className="overflow-hidden flex items-baseline">
-          <h1 className="hero-wordmark font-display font-extrabold flex">
+          <motion.h1 
+            initial="hidden"
+            animate="visible"
+            variants={{
+              hidden: { opacity: 0 },
+              visible: {
+                opacity: 1,
+                transition: {
+                  staggerChildren: 0.04,
+                  delayChildren: 0.25,
+                },
+              },
+            }}
+            className="hero-wordmark font-display font-extrabold flex select-none"
+          >
             {letters.map((char, index) => (
               <motion.span
                 key={index}
-                initial={{ y: '100%' }}
-                animate={{ y: 0 }}
-                transition={{ duration: 0.8, delay: 0.2 + index * 0.05, ease: [0.16, 1, 0.3, 1] }}
-                className="inline-block"
+                variants={{
+                  hidden: { y: '115%', opacity: 0 },
+                  visible: {
+                    y: 0,
+                    opacity: 1,
+                    transition: { duration: 0.85, ease: [0.16, 1, 0.3, 1] }
+                  },
+                }}
+                whileHover={{ 
+                  y: -14,
+                  transition: { type: 'spring', stiffness: 450, damping: 15 }
+                }}
+                style={{ willChange: 'transform' }}
+                className="inline-block cursor-default gpu-accelerated"
               >
                 {char}
               </motion.span>
             ))}
-          </h1>
+          </motion.h1>
           <motion.span
-            initial={{ opacity: 0, scale: 0.5 }}
-            animate={{ opacity: 1, scale: 1 }}
-            transition={{ delay: 0.8, duration: 0.5 }}
-            className="text-2xl sm:text-5xl md:text-7xl font-extralight ml-2 align-top text-ink"
+            initial={{ opacity: 0, scale: 0.5, rotate: -30 }}
+            animate={{ opacity: 1, scale: 1, rotate: 0 }}
+            whileHover={{ 
+              rotate: 360, 
+              scale: 1.25,
+              transition: { duration: 0.8, ease: [0.16, 1, 0.3, 1] } 
+            }}
+            transition={{ delay: 0.75, type: 'spring', damping: 18, stiffness: 180 }}
+            className="text-2xl sm:text-5xl md:text-7xl font-extralight ml-2 align-top text-ink inline-block cursor-pointer select-none gpu-accelerated"
           >
             ®
           </motion.span>
@@ -87,14 +116,22 @@ export default function Hero() {
         
         <a 
           href="#studio" 
-          className="flex items-center gap-2 font-semibold hover:opacity-75 transition-opacity"
+          onClick={(e) => {
+            e.preventDefault();
+            if (window.__lenis) {
+              window.__lenis.scrollTo('#studio', { duration: 1.2 });
+            } else {
+              document.querySelector('#studio')?.scrollIntoView({ behavior: 'smooth' });
+            }
+          }}
+          className="flex items-center gap-2 font-semibold hover:opacity-75 transition-opacity cursor-pointer group"
         >
           <span>EXPLORE CREATOR SERVICES</span>
           <motion.div
-            animate={{ y: [0, 4, 0] }}
-            transition={{ repeat: Infinity, duration: 1.5 }}
+            animate={{ y: [0, 5, 0] }}
+            transition={{ repeat: Infinity, duration: 1.6, ease: [0.45, 0, 0.55, 1] }}
           >
-            <ArrowDown size={16} />
+            <ArrowDown size={16} className="group-hover:translate-y-0.5 transition-transform" />
           </motion.div>
         </a>
       </div>
