@@ -11,6 +11,7 @@ import Meaning from './components/Meaning';
 import Vision from './components/Vision';
 import Ideas from './components/Ideas';
 import Contact from './components/Contact';
+import BackToTop from './components/BackToTop';
 
 export default function App() {
   useEffect(() => {
@@ -66,6 +67,9 @@ export default function App() {
         <Ideas />
         <Contact />
       </main>
+
+      {/* Butter-Smooth Scroll To Top */}
+      <BackToTop />
     </div>
   );
 }
